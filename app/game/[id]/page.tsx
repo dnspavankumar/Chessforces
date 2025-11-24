@@ -302,7 +302,7 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
           {error && <p className="text-red-600 mt-2">{error}</p>}
         </div>
 
-        <div className="inline-block border-2 border-gray-800">
+        <div className="inline-block border-4 border-gray-900 shadow-xl">
           {game.board.map((row, rowIndex) => (
             <div key={rowIndex} className="flex">
               {row.map((piece, colIndex) => {
@@ -315,16 +315,23 @@ export default function GamePage({ params }: { params: Promise<{ id: string }> }
                     onClick={() => handleSquareClick(rowIndex, colIndex)}
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, rowIndex, colIndex)}
-                    className={`w-16 h-16 flex items-center justify-center text-4xl transition-colors cursor-pointer
-                      ${isLight ? 'bg-gray-200' : 'bg-gray-400'}
-                      ${isSelected ? 'ring-4 ring-blue-500' : ''}
-                      hover:opacity-80`}
+                    className={`w-20 h-20 flex items-center justify-center text-6xl transition-all cursor-pointer relative
+                      ${isLight ? 'bg-[#f0d9b5]' : 'bg-[#b58863]'}
+                      ${isSelected ? 'ring-4 ring-inset ring-yellow-400 bg-opacity-80' : ''}
+                      hover:brightness-95`}
                   >
                     {piece && (
                       <span
                         draggable={game.status === 'active' && piece.color === playerColor}
                         onDragStart={(e) => handleDragStart(e, rowIndex, colIndex)}
-                        className="cursor-move select-none"
+                        className={`cursor-move select-none drop-shadow-lg ${
+                          piece.color === 'w' ? 'text-white' : 'text-gray-900'
+                        }`}
+                        style={{
+                          filter: piece.color === 'w' 
+                            ? 'drop-shadow(0 2px 2px rgba(0,0,0,0.8))' 
+                            : 'drop-shadow(0 2px 2px rgba(255,255,255,0.5))'
+                        }}
                       >
                         {pieceSymbols[piece.color + piece.type]}
                       </span>
