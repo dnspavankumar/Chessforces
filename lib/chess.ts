@@ -20,7 +20,7 @@ export const isValidMove = (board: Board, from: Position, to: Position, turn: Co
   const piece = board[from.row][from.col];
   if (!piece || piece.color !== turn) return false;
   if (to.row < 0 || to.row > 7 || to.col < 0 || to.col > 7) return false;
-  
+
   const target = board[to.row][to.col];
   if (target && target.color === piece.color) return false;
 
@@ -86,4 +86,19 @@ export const makeMove = (board: Board, from: Position, to: Position): Board => {
   newBoard[to.row][to.col] = newBoard[from.row][from.col];
   newBoard[from.row][from.col] = null;
   return newBoard;
+};
+
+export const getValidMoves = (board: Board, from: Position, turn: Color): Position[] => {
+  const validMoves: Position[] = [];
+
+  for (let row = 0; row < 8; row++) {
+    for (let col = 0; col < 8; col++) {
+      const to = { row, col };
+      if (isValidMove(board, from, to, turn)) {
+        validMoves.push(to);
+      }
+    }
+  }
+
+  return validMoves;
 };
